@@ -1,11 +1,11 @@
-package dev.unjinxed.unjinxedmicroservices.controllers;
+package dev.unjinxed.unjinxedmicroservices.controllers.pings;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TestController {
-    @GetMapping("/")
+public class PingController {
+    @GetMapping("/ping")
     public String index() {
-        return "Greetings from Spring Boot!";
+        return "Server is running";
     }
 }
