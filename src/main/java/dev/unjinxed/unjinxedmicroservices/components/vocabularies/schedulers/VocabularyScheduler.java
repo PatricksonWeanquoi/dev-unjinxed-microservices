@@ -1,4 +1,4 @@
-package dev.unjinxed.unjinxedmicroservices.schedulers;
+package dev.unjinxed.unjinxedmicroservices.components.vocabularies.schedulers;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
