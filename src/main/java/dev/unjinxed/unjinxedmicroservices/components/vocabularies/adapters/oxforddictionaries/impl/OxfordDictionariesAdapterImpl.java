@@ -5,6 +5,7 @@ import dev.unjinxed.unjinxedmicroservices.components.vocabularies.adapters.oxfor
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.oxforddictionaries.OxfordDictionariesResponse;
 import dev.unjinxed.unjinxedmicroservices.constants.GLOBALCONSTANTS;
 import dev.unjinxed.unjinxedmicroservices.exceptions.RequestEntityBuilderException;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,6 +20,7 @@ import javax.validation.constraints.NotNull;
 
 @Component
 @Slf4j
+@EqualsAndHashCode
 public class OxfordDictionariesAdapterImpl extends HttpClientBase implements OxfordDictionariesAdapter {
 
     private String url;
@@ -51,7 +53,7 @@ public class OxfordDictionariesAdapterImpl extends HttpClientBase implements Oxf
                     .doOnSuccess(responseEntity -> log.info("getWordDefinition(): response " + responseEntity))
                     .map(responseEntity -> (OxfordDictionariesResponse) responseEntity.getBody());
         } catch (RequestEntityBuilderException requestEntityBuilderException) {
-            System.out.println("getWordDefinition(): failed to build request builder: " + requestEntityBuilderException);
+            log.info("getWordDefinition(): failed to build request builder: " + requestEntityBuilderException);
             return Mono.error(requestEntityBuilderException);
         }
     }

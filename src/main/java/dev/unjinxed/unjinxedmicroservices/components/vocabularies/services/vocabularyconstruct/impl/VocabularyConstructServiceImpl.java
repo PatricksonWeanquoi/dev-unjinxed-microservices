@@ -2,6 +2,7 @@ package dev.unjinxed.unjinxedmicroservices.components.vocabularies.services.voca
 
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.oxforddictionaries.OxfordDictionariesResponse;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.oxforddictionaries.OxfordDictionariesSenses;
+import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.randomwords.RandomWordsResponse;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.vocabularycontruct.WordDefinition;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.services.oxforddictionaries.OxfordDictionariesService;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.services.randomwords.RandomWordsService;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.function.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 @Service
@@ -61,7 +63,7 @@ public class VocabularyConstructServiceImpl implements VocabularyConstructServic
 
     private Mono<WordDefinition> composeDefinition() {
         return this.randomWordsService.getRandomWord()
-                .map(randomWordsResponse -> randomWordsResponse.getWord())
+                .map(RandomWordsResponse::getWord)
                 .flatMap(this.oxfordDictionariesService::getWordDefinition)
                 .map(this::buildWordDefinition);
     }
@@ -80,9 +82,7 @@ public class VocabularyConstructServiceImpl implements VocabularyConstructServic
             dictionariesSenses = oxfordDictionariesResponse.results
                 .stream()
                 .map(oxfordDictionariesResults -> oxfordDictionariesResults.lexicalEntries)
-                .collect(Collectors.toList())
-                .stream()
-                .flatMap(oxfordDictionariesLexicalEntries -> oxfordDictionariesLexicalEntries.stream())
+                .flatMap(Collection::stream)
                 .filter(oxfordDictionariesLexicalEntry -> oxfordDictionariesLexicalEntry.lexicalCategory != null)
                 .map(oxfordDictionariesLexicalEntry -> {
                     wordDefinition.getLexicalCategories().add(oxfordDictionariesLexicalEntry.lexicalCategory);

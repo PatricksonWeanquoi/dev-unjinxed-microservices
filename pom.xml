@@ -54,10 +54,17 @@
 			<artifactId>spring-data-rest-hal-browser</artifactId>
 			<version>3.3.6.RELEASE</version>
 		</dependency>
+
+			<!--		TEST DEPENDENCIES		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<version>3.5.3</version>
 		</dependency>
 	</dependencies>
 

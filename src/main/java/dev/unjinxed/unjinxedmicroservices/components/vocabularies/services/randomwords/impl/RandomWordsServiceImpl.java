@@ -1,11 +1,9 @@
 package dev.unjinxed.unjinxedmicroservices.components.vocabularies.services.randomwords.impl;
 
-import dev.unjinxed.unjinxedmicroservices.components.vocabularies.adapters.randomwordsadapter.Impl.RandomWordsAdapterImpl;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.adapters.randomwordsadapter.RandomWordsAdapter;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.randomwords.RandomWordsResponse;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.services.randomwords.RandomWordsService;
 import dev.unjinxed.unjinxedmicroservices.exceptions.RequestEntityBuilderException;
-import org.reactivestreams.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
@@ -13,8 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.function.ServerResponse;
 import reactor.core.publisher.Mono;
-
-import java.time.Duration;
 
 @Service
 public class RandomWordsServiceImpl implements RandomWordsService {

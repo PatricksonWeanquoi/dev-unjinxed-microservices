@@ -1,34 +1,25 @@
-package dev.unjinxed.unjinxedmicroservices.components.vocabularies.adapters.randomwordsadapter.Impl;
+package dev.unjinxed.unjinxedmicroservices.components.vocabularies.adapters.randomwordsadapter.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.unjinxed.unjinxedmicroservices.adaptors.httpclientbase.HttpClientBase;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.adapters.randomwordsadapter.RandomWordsAdapter;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.randomwords.RandomWordsResponse;
 import dev.unjinxed.unjinxedmicroservices.exceptions.RequestEntityBuilderException;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
-import org.reactivestreams.Subscription;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.MultiValueMapAdapter;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.servlet.function.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.concurrent.Flow;
 
 @Component
 @Slf4j
+@EqualsAndHashCode
 public class RandomWordsAdapterImpl extends HttpClientBase implements RandomWordsAdapter {
 
     private String appHost;
@@ -56,7 +47,7 @@ public class RandomWordsAdapterImpl extends HttpClientBase implements RandomWord
         log.info("getRandomWord(): entering... resource path: " + requestPath);
         try {
             RequestEntity<Void> requestEntity = this.generateRequestEntity(requestPath,null, headers, HttpMethod.GET);
-            ParameterizedTypeReference returnType = new ParameterizedTypeReference<String>() {};
+            ParameterizedTypeReference<String> returnType = new ParameterizedTypeReference<>() {};
             return this.serviceCallOut(requestEntity, returnType)
                     .doOnSuccess(responseEntity -> log.info("getRandomWord(): response " + responseEntity))
                     .map(responseEntity -> responseEntity.getBody().toString())

@@ -23,8 +23,7 @@ public class RequestEntityBuilder {
     String sessionID;
     String domain;
 
-    public RequestEntity generateRequestEntity(@NotNull String resource,
-                                               @NotNull Object body,
+    public  <T> RequestEntity<T> generateRequestEntity(@NotNull String resource, T body,
                                                @NotNull MultiValueMap<String,String> headers,
                                                @NotNull HttpMethod method) throws RequestEntityBuilderException {
         log.info("generateRequestEntity(): entering... " +
