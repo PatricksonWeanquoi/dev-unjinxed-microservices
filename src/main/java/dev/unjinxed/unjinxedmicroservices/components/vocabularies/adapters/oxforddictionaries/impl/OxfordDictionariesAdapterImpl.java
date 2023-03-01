@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -51,7 +52,7 @@ public class OxfordDictionariesAdapterImpl extends HttpClientBase implements Oxf
             RequestEntity<Void> requestEntityBuilder = this.generateRequestEntity(resourcePath, null, this.headers, HttpMethod.GET);
             return this.serviceCallOut(requestEntityBuilder, new ParameterizedTypeReference<OxfordDictionariesResponse>(){})
                     .doOnSuccess(responseEntity -> log.info("getWordDefinition(): response " + responseEntity))
-                    .map(responseEntity -> (OxfordDictionariesResponse) responseEntity.getBody());
+                    .map(ResponseEntity::getBody);
         } catch (RequestEntityBuilderException requestEntityBuilderException) {
             log.info("getWordDefinition(): failed to build request builder: " + requestEntityBuilderException);
             return Mono.error(requestEntityBuilderException);

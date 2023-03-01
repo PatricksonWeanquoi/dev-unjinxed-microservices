@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -50,7 +51,7 @@ public class RandomWordsAdapterImpl extends HttpClientBase implements RandomWord
             ParameterizedTypeReference<String> returnType = new ParameterizedTypeReference<>() {};
             return this.serviceCallOut(requestEntity, returnType)
                     .doOnSuccess(responseEntity -> log.info("getRandomWord(): response " + responseEntity))
-                    .map(responseEntity -> responseEntity.getBody().toString())
+                    .map(ResponseEntity::getBody)
                     .map(word -> RandomWordsResponse.builder().word(word).build());
         } catch (RequestEntityBuilderException requestEntityBuilderException) {
             log.error("getRandomWord(): requestEntityBuilderException " + requestEntityBuilderException.getMessage());

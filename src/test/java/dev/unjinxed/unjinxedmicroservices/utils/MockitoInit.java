@@ -6,6 +6,6 @@ import org.mockito.MockitoAnnotations;
 public class MockitoInit {
     @BeforeEach
     void init() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 }

@@ -7,25 +7,18 @@ import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.vocabul
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.services.oxforddictionaries.OxfordDictionariesService;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.services.randomwords.RandomWordsService;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.services.vocabularyconstruct.VocabularyConstructService;
-import dev.unjinxed.unjinxedmicroservices.exceptions.RequestEntityBuilderException;
-import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.function.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class VocabularyConstructServiceImpl implements VocabularyConstructService {
