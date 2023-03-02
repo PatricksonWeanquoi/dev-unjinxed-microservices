@@ -32,10 +32,11 @@ public class OxfordDictionariesAdapterImpl extends HttpClientBase implements Oxf
     public OxfordDictionariesAdapterImpl(@NotNull @Value("${oxfordDictionaries.url}") String url,
                                          @NotNull @Value("${oxfordDictionaries.app_id}") String appId,
                                          @NotNull @Value("${oxfordDictionaries.app_key}") String appKey) {
+        super();
         this.url = url;
         this.appId = appId;
         this.appKey = appKey;
-        setDomain(this.url);
+        super.setDomain(this.url);
         initializeHeaders();
     }
 
@@ -49,8 +50,8 @@ public class OxfordDictionariesAdapterImpl extends HttpClientBase implements Oxf
         final String resourcePath = "/entries/en-us/" + word;
         log.info("getWordDefinition(): resource path: " + resourcePath);
         try {
-            RequestEntity<Void> requestEntityBuilder = this.generateRequestEntity(resourcePath, null, this.headers, HttpMethod.GET);
-            return this.serviceCallOut(requestEntityBuilder, new ParameterizedTypeReference<OxfordDictionariesResponse>(){})
+            RequestEntity<Void> requestEntityBuilder = this.createRequestEntity(resourcePath, null, this.headers, HttpMethod.GET);
+            return this.triggerServiceCallOut(requestEntityBuilder, new ParameterizedTypeReference<OxfordDictionariesResponse>(){})
                     .doOnSuccess(responseEntity -> log.info("getWordDefinition(): response " + responseEntity))
                     .map(ResponseEntity::getBody);
         } catch (RequestEntityBuilderException requestEntityBuilderException) {
@@ -58,4 +59,15 @@ public class OxfordDictionariesAdapterImpl extends HttpClientBase implements Oxf
             return Mono.error(requestEntityBuilderException);
         }
     }
+
+    public <T, U> Mono<ResponseEntity<U>> triggerServiceCallOut(RequestEntity<T> request, ParameterizedTypeReference<U> returnType) {
+        return super.serviceCallOut(request, returnType);
+    }
+
+    public <T> RequestEntity<T> createRequestEntity(@NotNull String resource, T body,
+                                                    @NotNull MultiValueMap<String,String> headers,
+                                                    @NotNull HttpMethod method) throws RequestEntityBuilderException {
+        return super.generateRequestEntity(resource, body, headers, method);
+    }
+
 }

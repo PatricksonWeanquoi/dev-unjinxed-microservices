@@ -47,9 +47,9 @@ public class RandomWordsAdapterImpl extends HttpClientBase implements RandomWord
         final String requestPath =  "/getRandom";
         log.info("getRandomWord(): entering... resource path: " + requestPath);
         try {
-            RequestEntity<Void> requestEntity = this.generateRequestEntity(requestPath,null, headers, HttpMethod.GET);
+            RequestEntity<Void> requestEntity = this.createRequestEntity(requestPath,null, headers, HttpMethod.GET);
             ParameterizedTypeReference<String> returnType = new ParameterizedTypeReference<>() {};
-            return this.serviceCallOut(requestEntity, returnType)
+            return this.triggerServiceCallOut(requestEntity, returnType)
                     .doOnSuccess(responseEntity -> log.info("getRandomWord(): response " + responseEntity))
                     .map(ResponseEntity::getBody)
                     .map(word -> RandomWordsResponse.builder().word(word).build());
@@ -57,5 +57,15 @@ public class RandomWordsAdapterImpl extends HttpClientBase implements RandomWord
             log.error("getRandomWord(): requestEntityBuilderException " + requestEntityBuilderException.getMessage());
             return Mono.error(requestEntityBuilderException);
         }
+    }
+
+    public <T, U> Mono<ResponseEntity<U>> triggerServiceCallOut(RequestEntity<T> request, ParameterizedTypeReference<U> returnType) {
+        return super.serviceCallOut(request, returnType);
+    }
+
+    public <T> RequestEntity<T> createRequestEntity(@NotNull String resource, T body,
+                                                     @NotNull MultiValueMap<String,String> headers,
+                                                     @NotNull HttpMethod method) throws RequestEntityBuilderException {
+        return super.generateRequestEntity(resource, body, headers, method);
     }
 }

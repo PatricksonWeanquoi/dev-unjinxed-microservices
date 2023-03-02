@@ -1,52 +1,71 @@
 package dev.unjinxed.unjinxedmicroservices.components.vocabularies.adapters.oxforddictionaries;
 
-import dev.unjinxed.unjinxedmicroservices.adaptors.httpclientbase.HttpClientBase;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.adapters.oxforddictionaries.impl.OxfordDictionariesAdapterImpl;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.oxforddictionaries.OxfordDictionariesResponse;
 import dev.unjinxed.unjinxedmicroservices.exceptions.RequestEntityBuilderException;
 import dev.unjinxed.unjinxedmicroservices.utils.MockitoInit;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-//import static org.hamcrest.Matctchers.any;
+import java.util.stream.Stream;
 
-import java.util.Map;
-
-import static org.assertj.core.api.Fail.fail;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static reactor.core.publisher.Mono.when;
-public class OxfordDictionariesAdapterTest extends MockitoInit {
-    @InjectMocks
-    OxfordDictionariesAdapterImpl oxfordDictionariesAdapter;
+import static org.mockito.Mockito.doReturn;
+@Slf4j
+@ExtendWith(SpringExtension.class)
+@TestPropertySource("classpath:application.properties")
+public class OxfordDictionariesAdapterTest extends MockitoInit{
+    OxfordDictionariesAdapterImpl oxfordDictionariesAdapterImpl;
+    @Value("${oxfordDictionaries.url}")
+    String url;
+    @Value("${oxfordDictionaries.app_id}")
+    String appId;
+    @Value("${oxfordDictionaries.app_key}")
+    String appKey;
+
+    @BeforeEach
+    void init() {
+        oxfordDictionariesAdapterImpl = Mockito.spy(new OxfordDictionariesAdapterImpl(url, appId, appKey));
+    }
+    @ParameterizedTest
+    @MethodSource("responses")
+    @DisplayName("Get Word Definition Get Success Definition")
+    void getWordDefinitionGetSuccessDefinitionTest(Mono<Object> responseInput) throws RequestEntityBuilderException {
+        doReturn(responseInput).when((oxfordDictionariesAdapterImpl)).triggerServiceCallOut(any(), any());
+        Mono<OxfordDictionariesResponse> oxfordDictionariesResponseMono = oxfordDictionariesAdapterImpl.getWordDefinition("test");
+        StepVerifier.create(oxfordDictionariesResponseMono)
+                .assertNext(response -> {
+                    assertNotNull(response, "serviceCallOutSuccessGetCall(): Response not null");
+                }).verifyComplete();
+    }
 
     @Test
-    void getWordDefinitionGetSuccessDefinitionTest() throws RequestEntityBuilderException {
-//        this.oxfordDictionariesAdapter.setRestTemplate(new RestTemplate());
-//        RequestEntity requestEntity = this.oxfordDictionariesAdapter.generateRequestEntity("", null, new LinkedMultiValueMap<>(), HttpMethod.GET);
-//
-//        Mockito.when(this.oxfordDictionariesAdapter.getRestTemplate().exchange(requestEntity, new ParameterizedTypeReference<Object>() {
-//        }))
-//                .thenReturn(Mono.just(new ResponseEntity("Hello Word", new LinkedMultiValueMap<>(), 200)));
-//        Mono<OxfordDictionariesResponse> oxfordDictionariesResponseMono = this.oxfordDictionariesAdapter.getWordDefinition("test");
-//
-//        StepVerifier.create(oxfordDictionariesResponseMono)
-//                .assertNext(response -> {
-//                    assertNotNull(response, "serviceCallOutSuccessGetCall(): Response not null");
-//                }).verifyComplete();
-        fail("TODO: add unit test");
+    @DisplayName("Get Word Definition Throw Exception")
+    void getWordDefinitionThrowExceptionTest() throws RequestEntityBuilderException {
+        Mockito.doThrow(new RequestEntityBuilderException("URL format error")).when(oxfordDictionariesAdapterImpl).createRequestEntity(any(), any(), any(), any());
+        Mono<OxfordDictionariesResponse> randomWordsResponseMono = this.oxfordDictionariesAdapterImpl.getWordDefinition("test");
+        StepVerifier.create(randomWordsResponseMono)
+                .verifyError();
+    }
+
+    static Stream<Arguments> responses() {
+        return Stream.of(
+                Arguments.of(Mono.just(new ResponseEntity<>(OxfordDictionariesResponse.builder().build(), new LinkedMultiValueMap<>(), 200)))
+        );
     }
 }

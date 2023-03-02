@@ -14,6 +14,8 @@ import reactor.core.publisher.Mono;
 
 @EqualsAndHashCode
 public class HttpClientBase extends RequestEntityBuilder {
+    @Qualifier("restTemplate")
+    @Autowired
     RestTemplate restTemplate;
 
     public <T, U> Mono<ResponseEntity<U>> serviceCallOut(RequestEntity<T> request, ParameterizedTypeReference<U> returnType) {
@@ -22,13 +24,5 @@ public class HttpClientBase extends RequestEntityBuilder {
         } catch (HttpClientErrorException httpClientErrorException) {
             return Mono.error(httpClientErrorException);
         }
-    }
-
-    public void setRestTemplate(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
-    public RestTemplate getRestTemplate() {
-        return this.restTemplate;
     }
 }
