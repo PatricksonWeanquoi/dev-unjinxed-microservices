@@ -13,6 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OxfordDictionariesExample {
-    public String text;
-    public List<Object> notes;
+    String text;
+    List<Object> notes;
 }

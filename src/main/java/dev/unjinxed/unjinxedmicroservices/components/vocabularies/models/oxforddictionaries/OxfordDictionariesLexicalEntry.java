@@ -13,9 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OxfordDictionariesLexicalEntry {
-    public List<OxfordDictionariesEntry> entries;
-    public OxfordDictionarieslexicalCategory lexicalCategory;
-    public List<Object> phrases;
-    public String text;
+    List<OxfordDictionariesEntry> entries;
+    OxfordDictionarieslexicalCategory lexicalCategory;
+    List<Object> phrases;
+    String text;
 }
 

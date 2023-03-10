@@ -13,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OxfordDictionariesResponse {
-    public String id;
-    public String word;
-    public List<OxfordDictionariesResults> results;
-    public Object metadata;
+    String id;
+    String word;
+    List<OxfordDictionariesResults> results;
+    Object metadata;
 }

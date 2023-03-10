@@ -26,10 +26,11 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-@Slf4j
+
+@DisplayName("Test-Case: Oxford Dictionaries Adapter")
 @ExtendWith(SpringExtension.class)
 @TestPropertySource("classpath:application.properties")
-public class OxfordDictionariesAdapterTest extends MockitoInit{
+class OxfordDictionariesAdapterTest extends MockitoInit{
     OxfordDictionariesAdapterImpl oxfordDictionariesAdapterImpl;
     @Value("${oxfordDictionaries.url}")
     String url;
@@ -45,13 +46,12 @@ public class OxfordDictionariesAdapterTest extends MockitoInit{
     @ParameterizedTest
     @MethodSource("responses")
     @DisplayName("Get Word Definition Get Success Definition")
-    void getWordDefinitionGetSuccessDefinitionTest(Mono<Object> responseInput) throws RequestEntityBuilderException {
+    void getWordDefinitionGetSuccessDefinitionTest(Mono<Object> responseInput) {
         doReturn(responseInput).when((oxfordDictionariesAdapterImpl)).triggerServiceCallOut(any(), any());
         Mono<OxfordDictionariesResponse> oxfordDictionariesResponseMono = oxfordDictionariesAdapterImpl.getWordDefinition("test");
         StepVerifier.create(oxfordDictionariesResponseMono)
-                .assertNext(response -> {
-                    assertNotNull(response, "serviceCallOutSuccessGetCall(): Response not null");
-                }).verifyComplete();
+                .assertNext(response -> assertNotNull(response, "serviceCallOutSuccessGetCall(): Response not null")
+                ).verifyComplete();
     }
 
     @Test

@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OxfordDictionarieslexicalCategory {
-    public String id;
-    public String text;
+    String id;
+    String text;
 }

@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DisplayName("Http Client Base Test")
+@DisplayName("Test-Case: Http Client Base")
 class HttpClientBaseTest extends MockitoInit {
     @Mock
     RestTemplate restTemplate;

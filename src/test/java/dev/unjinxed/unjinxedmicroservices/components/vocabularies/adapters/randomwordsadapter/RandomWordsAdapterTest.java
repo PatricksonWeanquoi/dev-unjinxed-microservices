@@ -27,11 +27,11 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isNotNull;
-
+@DisplayName("Test-Case: Random Words Adapter ")
 @Slf4j
 @ExtendWith(SpringExtension.class)
 @TestPropertySource("classpath:application.properties")
-public class RandomWordsAdapterTest {
+class RandomWordsAdapterTest {
     RandomWordsAdapterImpl randomWordsAdapterImpl;
     @Value("${X-RapidAPI-Host}")
     String appHost;

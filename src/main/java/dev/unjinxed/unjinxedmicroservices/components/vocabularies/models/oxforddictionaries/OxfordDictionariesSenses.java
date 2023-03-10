@@ -13,15 +13,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OxfordDictionariesSenses {
-    public List<String> definitions;
-    public List<Object> domainClasses;
-    public List<OxfordDictionariesExample> examples;
-    public String id;
-    public List<Object> semanticClasses;
-    public List<String> shortDefinitions;
-    public List<Object> subsenses;
-    public List<Object> synonyms;
-    public List<Object> thesaurusLinks;
-    public List<Object> notes;
+    List<String> definitions;
+    List<Object> domainClasses;
+    List<OxfordDictionariesExample> examples;
+    String id;
+    List<Object> semanticClasses;
+    List<String> shortDefinitions;
+    List<Object> subsenses;
+    List<Object> synonyms;
+    List<Object> thesaurusLinks;
+    List<Object> notes;
 }
 

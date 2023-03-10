@@ -13,9 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OxfordDictionariesEntry {
-    public List<String> etymologies;
-    public String homographNumber;
-    public List<Object> pronunciations;
-    public List<OxfordDictionariesSenses> senses;
+    List<String> etymologies;
+    String homographNumber;
+    List<Object> pronunciations;
+    List<OxfordDictionariesSenses> senses;
 }
 

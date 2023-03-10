@@ -13,10 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OxfordDictionariesResults {
-    public String id;
-    public String language;
-    public List<OxfordDictionariesLexicalEntry> lexicalEntries;
-    public String type;
-    public String word;
+    String id;
+    String language;
+    List<OxfordDictionariesLexicalEntry> lexicalEntries;
+    String type;
+    String word;
 }
 

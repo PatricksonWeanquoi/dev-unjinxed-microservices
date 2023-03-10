@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class RandomWordsServiceImpl implements RandomWordsService {
 
-    private RandomWordsAdapter randomWordsAdapter;
+    RandomWordsAdapter randomWordsAdapter;
 
     public RandomWordsServiceImpl(@Autowired RandomWordsAdapter randomWordsAdapter) {
         this.randomWordsAdapter = randomWordsAdapter;

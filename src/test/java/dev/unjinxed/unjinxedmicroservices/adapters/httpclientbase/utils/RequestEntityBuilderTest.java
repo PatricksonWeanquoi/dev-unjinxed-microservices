@@ -2,7 +2,6 @@ package dev.unjinxed.unjinxedmicroservices.adapters.httpclientbase.utils;
 
 import dev.unjinxed.unjinxedmicroservices.adaptors.httpclientbase.utils.RequestEntityBuilder;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.oxforddictionaries.OxfordDictionariesExample;
-import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.randomwords.RandomWordsResponse;
 import dev.unjinxed.unjinxedmicroservices.components.vocabularies.models.vocabularycontruct.WordDefinition;
 import dev.unjinxed.unjinxedmicroservices.exceptions.RequestEntityBuilderException;
 import dev.unjinxed.unjinxedmicroservices.utils.MockitoInit;
@@ -17,17 +16,14 @@ import org.springframework.http.RequestEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
-public class RequestEntityBuilderTest extends MockitoInit {
+@DisplayName("Test-Case: Request Entity Builder")
+class RequestEntityBuilderTest extends MockitoInit {
     @Tag("request-entity-builder")
     @DisplayName("Check Request Body")
     @ParameterizedTest
